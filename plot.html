@@ -7,77 +7,158 @@
 <script>
 	TESTER = document.getElementById('tester');
 	bvalidation = true;
+	var train = {};
+	var validation = {};
+	var plane = {}; 
 
-
-	Plotly.d3.csv('./Archive/train_PCA.csv', function(err, rows){
-		function unpack(rows, key) {
-		  return rows.map(function(row) { return row[key]; });
+	Plotly.d3.csv('Archive/train_PCA.csv', function(err, rows){
+	function unpack(rows, key) {
+	  return rows[key]; ;
 	}
+	  
+	var z_data=[];
+	var y_data = [];
+	var x_data = [];
 
-	var z_data=[ ]
-	for(i=0;i<10;i++)
+	//parse the rows of the csv file and write into above arrays
+	for(i=0;i<rows.length;i++)
 	{
 	  var row = unpack(rows,i);
-	  z_data.push(row);
-	  console.log(row);
+	  x_data.push(parseFloat(row['x']));
+	  y_data.push(parseFloat(row['y']));
+	  z_data.push(parseFloat(row['z']));
 
 	}
 
-	z1 = [
-    [8.83,8.89,8.81,8.87,8.9,8.87],
-    [8.89,8.94,8.85,8.94,8.96,8.92],
-    [8.84,8.9,8.82,8.92,8.93,8.91],
-    [8.79,8.85,8.79,8.9,8.94,8.92],
-    [8.79,8.88,8.81,8.9,8.95,8.92],
-    [8.8,8.82,8.78,8.91,8.94,8.92],
-    [8.75,8.78,8.77,8.91,8.95,8.92],
-    [8.8,8.8,8.77,8.91,8.95,8.94],
-    [8.74,8.81,8.76,8.93,8.98,8.99],
-    [8.89,8.99,8.92,9.1,9.13,9.11],
-    [8.97,8.97,8.91,9.09,9.11,9.11],
-    [9.04,9.08,9.05,9.25,9.28,9.27],
-    [9,9.01,9,9.2,9.23,9.2],
-    [8.99,8.99,8.98,9.18,9.2,9.19],
-    [8.93,8.97,8.97,9.18,9.2,9.18]
-	];
+	//initialize equations
+	x_eq = parseFloat('1.55937729e-05');
+	y_eq = parseFloat('-2.27575413e-05');
+	z_eq = parseFloat('-1.45547286e-06');
+	intercept = parseFloat('-0.421052631579');
 
-	z2 = [];
-	for (var i=0;i<z1.length;i++ ) { 
-	  z2_row = [];
-	    for(var j=0;j<z1[i].length;j++) { 
-	      z2_row.push(z1[i][j]+1);
-	    }
-	    z2.push(z2_row);
+	var min_x_data = Math.min.apply(Math, x_data);
+	var max_x_data = Math.max.apply(Math, x_data);
+	var min_y_data = Math.min.apply(Math, y_data);
+	var max_y_data = Math.max.apply(Math, y_data);
+	var split = 100;
+
+	var x = [];
+	var y = [];
+	var z = [];
+
+	//calculate the linspace of x,y
+	for (var i = 0; i < split; i++) {
+		var next_x = min_x_data + i * (max_x_data - min_x_data) / split;
+		var next_y = min_y_data + i * (max_y_data - min_y_data) / split;
+		x.push(next_x);
+		y.push(next_y);
+		
 	}
 
-	z3 = []
-	for (var i=0;i<z1.length;i++ ) { 
-	  z3_row = [];
-	    for(var j=0;j<z1[i].length;j++) { 
-	      z3_row.push(z1[i][j]-1);
-	    }
-	    z3.push(z3_row);
+
+	//calculate the meshgrid of x and y
+	var xx = [];
+	var yy = [];
+	var zz = [];
+
+	for (var j = 0; j < y.length; j++) {
+		var next_arr_x = [];
+		var next_arr_y = [];
+		for (var i = 0; i < x.length; i++) {
+			next_arr_x.push(x[i]);
+			next_arr_y.push(y[j]);
+		}
+		xx.push(next_arr_x);
+		yy.push(next_arr_y);
 	}
-	var data_z1 = {z: z1, type: 'surface', visible: bvalidation};
-	var data_z2 = {z: z2, showscale: false, opacity:0.9, type: 'surface'};
-	var data_z3 = {z: z3, showscale: false, opacity:0.9, type: 'surface'};
-	var data = [data_z1, data_z2, data_z3];
-	var layout = {
-		showscale: false
+
+	//calculate z
+	for (var j = 0; j < y.length; j++) {
+		var next_arr_z = [];
+		for (var i = 0; i < x.length; i++) {
+			var next_z = (intercept - xx[j][i] * x_eq - yy[j][i] * y_eq) / z_eq;
+			next_arr_z.push(next_z);
+		}
+		zz.push(next_arr_z);
+	}
+
+
+	train = {
+		x:x_data, y: y_data, z: z_data,
+		visible: bvalidation,
+		showlegend: false,
+		mode: 'markers',
+		marker: {
+			size: 12,
+			line: {
+			color: 'rgba(217, 217, 217, 0.14)',
+			width: 0.5},
+			opacity: 0.8},
+		type: 'scatter3d'
 	};
 
+	plane = {
+		x:xx, y:yy, z:zz,
+		mode: 'markers',
+		marker: {
+			size: 12,
+			line: {
+			color: 'rgba(217, 217, 217, 0.14)',
+			width: 0.5},
+			opacity: 0.8},
+		type: 'surface'
+	}	  
+	
+	});
 
-	Plotly.newPlot(TESTER, [data_z1, data_z2, data_z3], layout);
+	Plotly.d3.csv('Archive/test_PCA.csv', function(err, rows){
+	function unpack(rows, key) {
+	  return rows[key]; ;
+	}
+	  
+	var z_data=[];
+	var y_data = [];
+	var x_data = [];
 
-
-	// Plotly.animate(TESTER)
-	function hideValidation() {
-		bvalidation = !bvalidation;
-		data_z1 = {z: z1, type: 'surface', visible: bvalidation};
-		Plotly.newPlot(TESTER, [data_z1, data_z2, data_z3], layout)
+	//parse the rows of the csv file and write into above arrays
+	for(i=0;i<rows.length;i++)
+	{
+	  var row = unpack(rows,i);
+	  x_data.push(parseFloat(row['x']));
+	  y_data.push(parseFloat(row['y']));
+	  z_data.push(parseFloat(row['z']));
 
 	}
-	
+
+	validation = {
+		x:x_data, y: y_data, z: z_data,
+		visible: bvalidation,
+		showlegend: false,
+		mode: 'markers',
+		marker: {
+			size: 12,
+			line: {
+			color: 'rgba(217, 217, 217, 0.14)',
+			width: 0.5},
+			opacity: 0.8},
+		type: 'scatter3d'
+	};
+	data = [train, validation, plane];
+	Plotly.newPlot('tester', data);
+
+	});
+
+
+
+
+	function hideValidation() {
+		data = [train, validation, plane];
+
+		bvalidation = !bvalidation;
+		data[1].visible = bvalidation;
+		Plotly.newPlot('tester', data);
+
+	}
 
 
 

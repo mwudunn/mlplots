@@ -15,11 +15,13 @@ y_data = []
 z_data = []
 
 with open('Archive/train_PCA.csv') as csvfile:
-    readCSV = csv.reader(csvfile, delimiter=',')
-    for row in readCSV:
-        x_data.append(float(row[0]))
-        y_data.append(float(row[1]))
-        z_data.append(float(row[2]))
+	readCSV = csv.reader(csvfile, delimiter=',')
+	for row in readCSV:
+		if row[0] == 'x':
+			continue
+		x_data.append(float(row[0]))
+		y_data.append(float(row[1]))
+		z_data.append(float(row[2]))
 
         
 x_eq = float('1.55937729e-05')
@@ -30,8 +32,11 @@ intercept = float('-0.421052631579')
 x = np.linspace(min(x_data), max(x_data), 100)
 y = np.linspace(min(y_data), max(y_data), 100)
 X,Y = np.meshgrid(x,y)
+
+
 Z = (intercept - x_eq*X - y_eq*Y) / z_eq
 
+print(Z)
 surface = Surface(x=X, y=Y, z=Z)
 
 
