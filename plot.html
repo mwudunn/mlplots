@@ -155,8 +155,10 @@
 		data = [train, validation, plane];
 
 		bvalidation = !bvalidation;
-		data[1].visible = bvalidation;
-		Plotly.newPlot('tester', data);
+		layout = {
+			visible: bvalidation
+		}
+		Plotly.restyle('tester', layout, 1);
 
 	}
 
