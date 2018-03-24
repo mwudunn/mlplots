@@ -146,7 +146,7 @@
 	});
 
 	function exampleParabola() {
-		example = document.getElementById('example');
+		example = document.getElementById('parabola');
 
 		
 		z1 = [];
@@ -196,7 +196,7 @@
 			opacity: 0.8},
 		type: 'scatter3d'
 	};
-		Plotly.newPlot('example', [data_z1, data_points]);
+		Plotly.newPlot('parabola', [data_z1, data_points]);
 
 	}
 
@@ -227,8 +227,8 @@
 		var max = 20;
 		var min = 0;
 
-		var z_min = 1;
-		var z_max = 4;
+		var z_min = 3;
+		var z_max = 8;
 
 		for (var i = 0; i < scatter_samples; i++) {
 			var x = Math.random() * (max - min) + min;
@@ -241,16 +241,18 @@
 		}
 
 
-
+		var sx2 = []
+		var sy2 = []
+		var sz2 = []
 		for (var i = 0; i < scatter_samples; i++) {
 			var x = Math.random() * (max - min) + min;
 			var y = Math.random() * (max - min) + min;
 			var z_rand = Math.random()
 			var z = (((x - sample_points/2)/4) * ((x - sample_points/2)/4)) + (((y - sample_points/2)/3) * ((y - sample_points/2)/3)) 
 				- Math.random() * (z_max - z_min) + z_min;
-			sx.push(x);
-			sy.push(y);
-			sz.push(z);
+			sx2.push(x);
+			sy2.push(y);
+			sz2.push(z);
 		}
 		
 
@@ -268,7 +270,20 @@
 			opacity: 0.8},
 		type: 'scatter3d'
 	};
-		Plotly.newPlot('plane', [data_z1, data_points]);
+		data_points2 = {
+			x:sx2, y: sy2, z: sz2,
+			showlegend: false,
+			name:'Training Set',
+			mode: 'markers',
+			marker: {
+				size: 12,
+				line: {
+				color: 'rgba(140, 140, 0, 0.14)',
+				width: 0.5},
+				opacity: 0.8},
+			type: 'scatter3d'
+		};
+		Plotly.newPlot('plane', [data_z1, data_points, data_points2]);
 
 	}
 
