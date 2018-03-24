@@ -157,8 +157,8 @@
 			var xdisp = 10;
 			var ydisp = 10;
 			for (var j = 0; j < sample_points; j++) {
-				var rand_offset = Math.pow(Math.e, -(Math.pow((j-xdisp),2)/30 - (Math.pow((i-ydisp),2)/60));
-				console.log(rand_offset);
+				// var rand_offset = Math.pow(Math.e, -(Math.pow((j-xdisp),2)/30 - (Math.pow((i-ydisp),2)/60));
+				// console.log(rand_offset);
 				var global_paraboloid = (((j - sample_points/2)/4) * ((j - sample_points/2)/4)) + (((i - sample_points/2)/3) * ((i - sample_points/2)/3));
 				next_z.push(global_paraboloid + rand_offset);
 			}
