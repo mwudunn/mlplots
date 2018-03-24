@@ -5,7 +5,8 @@
 	var validation = {};
 	var plane = {}; 
 
-	Plotly.d3.csv('../data/train_PCA.csv', function(err, rows){
+	Plotly.d3.csv('Archive/train_PCA_all.csv', function(err, rows){
+
 	function unpack(rows, key) {
 	  return rows[key]; ;
 	}
@@ -77,11 +78,11 @@
 	}
 
 
-	train = {
+	all = {
 		x:x_data, y: y_data, z: z_data,
 		visible: bvalidation,
 		showlegend: false,
-		name:'Training Set',
+		name:'ALL set',
 		mode: 'markers',
 		marker: {
 			size: 12,
@@ -107,7 +108,9 @@
 	
 	});
 
-	Plotly.d3.csv('../data/test_PCA.csv', function(err, rows){
+
+	Plotly.d3.csv('Archive/train_PCA_aml.csv', function(err, rows){
+
 	function unpack(rows, key) {
 	  return rows[key]; ;
 	}
@@ -126,11 +129,12 @@
 
 	}
 
-	validation = {
+	aml = {
 		x:x_data, y: y_data, z: z_data,
 		visible: bvalidation,
 		showlegend: false,
-		name:'Validation Set',
+		name:'AML set',
+
 		mode: 'markers',
 		marker: {
 			size: 12,
@@ -140,7 +144,9 @@
 			opacity: 0.8},
 		type: 'scatter3d'
 	};
-	data = [train, validation, plane];
+
+
+	data = [all, aml, plane];
 	Plotly.newPlot('tester', data);
 
 	});
