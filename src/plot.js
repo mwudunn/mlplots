@@ -5,7 +5,7 @@
 	var validation = {};
 	var plane = {}; 
 
-	Plotly.d3.csv('Archive/train_PCA_all.csv', function(err, rows){
+	Plotly.d3.csv('../data/train_PCA_all.csv', function(err, rows){
 
 	function unpack(rows, key) {
 	  return rows[key]; ;
@@ -109,7 +109,7 @@
 	});
 
 
-	Plotly.d3.csv('Archive/train_PCA_aml.csv', function(err, rows){
+	Plotly.d3.csv('../data/train_PCA_aml.csv', function(err, rows){
 
 	function unpack(rows, key) {
 	  return rows[key]; ;
