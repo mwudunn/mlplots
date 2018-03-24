@@ -145,13 +145,12 @@
 
 	});
 
-	function nonconvexDataspace() {
+	function exampleParabola() {
 		example = document.getElementById('example');
 
-		var max = 100;
-		var min = -100;
+		
 		z1 = [];
-		var sample_points = 300;
+		var sample_points = 20;
 		for (var i = 0; i < sample_points; i++) {
 			var next_z = []
 			var xdisp = 10;
@@ -164,10 +163,112 @@
 			}
 			z1.push(next_z);
 		}
+
+		var sx = []
+		var sy = []
+		var sz = []
+
+		var scatter_samples = 15;
+		var max = 20;
+		var min = 0;
+
+		for (var i = 0; i < scatter_samples; i++) {
+			var x = Math.random() * (max - min) + min;
+			var y = Math.random() * (max - min) + min;
+			var z = (((x - sample_points/2)/4) * ((x - sample_points/2)/4)) + (((y - sample_points/2)/3) * ((y - sample_points/2)/3));
+			sx.push(x);
+			sy.push(y);
+			sz.push(z);
+		}
 		
 
 		var data_z1 = {z: z1, type: 'surface'};
-		Plotly.newPlot('example', [data_z1]);
+		data_points = {
+		x:sx, y: sy, z: sz,
+		showlegend: false,
+		name:'Training Set',
+		mode: 'markers',
+		marker: {
+			size: 12,
+			line: {
+			color: 'rgba(0, 0, 0, 0.14)',
+			width: 0.5},
+			opacity: 0.8},
+		type: 'scatter3d'
+	};
+		Plotly.newPlot('example', [data_z1, data_points]);
+
+	}
+
+	function examplePlane() {
+		example = document.getElementById('plane');
+
+		
+		z1 = [];
+		var sample_points = 20;
+		for (var i = 0; i < sample_points; i++) {
+			var next_z = []
+			var xdisp = 10;
+			var ydisp = 10;
+			for (var j = 0; j < sample_points; j++) {
+				// var rand_offset = Math.pow(Math.e, -(Math.pow((j-xdisp),2)/30 - (Math.pow((i-ydisp),2)/60));
+				// console.log(rand_offset);
+				var global_paraboloid = (((j - sample_points/2)/4) * ((j - sample_points/2)/4)) + (((i - sample_points/2)/3) * ((i - sample_points/2)/3));
+				next_z.push(global_paraboloid);
+			}
+			z1.push(next_z);
+		}
+
+		var sx = []
+		var sy = []
+		var sz = []
+
+		var scatter_samples = 15;
+		var max = 20;
+		var min = 0;
+
+		var z_min = 1;
+		var z_max = 4;
+
+		for (var i = 0; i < scatter_samples; i++) {
+			var x = Math.random() * (max - min) + min;
+			var y = Math.random() * (max - min) + min;
+			var z = (((x - sample_points/2)/4) * ((x - sample_points/2)/4)) + (((y - sample_points/2)/3) * ((y - sample_points/2)/3)) 
+				+ Math.random() * (z_max - z_min) + z_min;
+			sx.push(x);
+			sy.push(y);
+			sz.push(z);
+		}
+
+
+
+		for (var i = 0; i < scatter_samples; i++) {
+			var x = Math.random() * (max - min) + min;
+			var y = Math.random() * (max - min) + min;
+			var z_rand = Math.random()
+			var z = (((x - sample_points/2)/4) * ((x - sample_points/2)/4)) + (((y - sample_points/2)/3) * ((y - sample_points/2)/3)) 
+				- Math.random() * (z_max - z_min) + z_min;
+			sx.push(x);
+			sy.push(y);
+			sz.push(z);
+		}
+		
+
+		var data_z1 = {z: z1, type: 'surface'};
+		data_points = {
+		x:sx, y: sy, z: sz,
+		showlegend: false,
+		name:'Training Set',
+		mode: 'markers',
+		marker: {
+			size: 12,
+			line: {
+			color: 'rgba(0, 0, 0, 0.14)',
+			width: 0.5},
+			opacity: 0.8},
+		type: 'scatter3d'
+	};
+		Plotly.newPlot('plane', [data_z1, data_points]);
 
 	}
 
