@@ -34,7 +34,7 @@
 	var max_x_data = Math.max.apply(Math, x_data);
 	var min_y_data = Math.min.apply(Math, y_data);
 	var max_y_data = Math.max.apply(Math, y_data);
-	var split = 100;
+	var split = 5;
 
 	var x = [];
 	var y = [];
@@ -160,7 +160,7 @@
 				// var rand_offset = Math.pow(Math.e, -(Math.pow((j-xdisp),2)/30 - (Math.pow((i-ydisp),2)/60));
 				// console.log(rand_offset);
 				var global_paraboloid = (((j - sample_points/2)/4) * ((j - sample_points/2)/4)) + (((i - sample_points/2)/3) * ((i - sample_points/2)/3));
-				next_z.push(global_paraboloid + rand_offset);
+				next_z.push(global_paraboloid);
 			}
 			z1.push(next_z);
 		}
