@@ -1,10 +1,4 @@
-<head>
-	<script src="plotly-latest.min.js"></script>
-</head>
-<div id="tester" style="width:1000px;height:700px;"></div>
-<button id="validation" onclick="hideValidation()"> Show/Hide Validation Set</button>
 
-<script>
 	TESTER = document.getElementById('tester');
 	bvalidation = true;
 	var train = {};
@@ -12,6 +6,7 @@
 	var plane = {}; 
 
 	Plotly.d3.csv('Archive/train_PCA_all.csv', function(err, rows){
+
 	function unpack(rows, key) {
 	  return rows[key]; ;
 	}
@@ -40,7 +35,7 @@
 	var max_x_data = Math.max.apply(Math, x_data);
 	var min_y_data = Math.min.apply(Math, y_data);
 	var max_y_data = Math.max.apply(Math, y_data);
-	var split = 100;
+	var split = 5;
 
 	var x = [];
 	var y = [];
@@ -101,7 +96,7 @@
 	plane = {
 		x:xx, y:yy, z:zz,
 		mode: 'markers',
-		name: 'decision boundary',
+		name: 'Decision Boundary',
 		marker: {
 			size: 12,
 			line: {
@@ -113,7 +108,9 @@
 	
 	});
 
+
 	Plotly.d3.csv('Archive/train_PCA_aml.csv', function(err, rows){
+
 	function unpack(rows, key) {
 	  return rows[key]; ;
 	}
@@ -137,6 +134,7 @@
 		visible: bvalidation,
 		showlegend: false,
 		name:'AML set',
+
 		mode: 'markers',
 		marker: {
 			size: 12,
@@ -153,7 +151,31 @@
 
 	});
 
+	function nonconvexDataspace() {
+		example = document.getElementById('example');
 
+		var max = 100;
+		var min = -100;
+		z1 = [];
+		var sample_points = 300;
+		for (var i = 0; i < sample_points; i++) {
+			var next_z = []
+			var xdisp = 10;
+			var ydisp = 10;
+			for (var j = 0; j < sample_points; j++) {
+				// var rand_offset = Math.pow(Math.e, -(Math.pow((j-xdisp),2)/30 - (Math.pow((i-ydisp),2)/60));
+				// console.log(rand_offset);
+				var global_paraboloid = (((j - sample_points/2)/4) * ((j - sample_points/2)/4)) + (((i - sample_points/2)/3) * ((i - sample_points/2)/3));
+				next_z.push(global_paraboloid);
+			}
+			z1.push(next_z);
+		}
+		
+
+		var data_z1 = {z: z1, type: 'surface'};
+		Plotly.newPlot('example', [data_z1]);
+
+	}
 
 
 	function hideValidation() {
@@ -167,7 +189,3 @@
 		Plotly.restyle('tester', layout, 1);
 
 	}
-
-
-
-</script>
