@@ -84,26 +84,30 @@
 		showlegend: false,
 		name:'ALL set',
 		mode: 'markers',
+		
 		marker: {
-			size: 12,
-			line: {
-			color: 'rgba(0, 0, 0, 0.14)',
-			width: 0.5},
-			opacity: 0.8},
+			size: 8,
+			symbol:'diamond-open',
+			color: "rgb(51,181,229)",
+			},
 		type: 'scatter3d'
 	};
 
+	var colorscale = [[0.0, 'rgb(51,181,229)'],
+		[0.5, 'rgb(240,240,240)'],
+	 	[1.0, 'rgb(51,181,229))']];
+
+
 	plane = {
-		x:xx, y:yy, z:zz,
-		mode: 'markers',
+		x:xx, 
+		y:yy, 
+		z:zz,
+		
+	    colorscale: colorscale,
+	    
 		name: 'Decision Boundary',
-		marker: {
-			size: 12,
-			line: {
-			color: 'rgba(0, 0, 0, 0.14)',
-			width: 0.5},
-			opacity: 0.8},
-		type: 'surface'
+		type: 'surface',
+		opacity: .7
 	}	  
 	
 	});
@@ -137,11 +141,13 @@
 
 		mode: 'markers',
 		marker: {
-			size: 12,
+			symbol:'circle-open',
+			size: 8,
+			color: 'red',
 			line: {
-			color: 'rgba(217, 0, 0, 0.14)',
+			color: 'rgba(0, 0, 0, 0.14)',
 			width: 0.5},
-			opacity: 0.8},
+			opacity: 0.9},
 		type: 'scatter3d'
 	};
 
@@ -155,6 +161,10 @@
 		example = document.getElementById('parabola');
 
 		
+		var colorscale = [[0.0, 'rgb(51,181,229)'],
+		[0.5, 'rgb(240,240,240)'],
+	 	[1.0, 'rgb(51,181,229))']];
+
 		z1 = [];
 		var sample_points = 20;
 		for (var i = 0; i < sample_points; i++) {
@@ -188,16 +198,23 @@
 		}
 		
 
-		var data_z1 = {z: z1, type: 'surface'};
+		var data_z1 = {
+			z: z1, 
+			type: 'surface',
+			name:"Decision Boundary",
+			colorscale: colorscale,
+		};
 		data_points = {
 		x:sx, y: sy, z: sz,
 		showlegend: false,
-		name:'Training Set',
+		name:'Training Set (P)',
 		mode: 'markers',
 		marker: {
+			symbol:200,
+			color: 'blue',
 			size: 12,
 			line: {
-			color: 'rgba(0, 0, 0, 0.14)',
+			color: 'rgba(0, 0, 0, 1)',
 			width: 0.5},
 			opacity: 0.8},
 		type: 'scatter3d'
@@ -210,6 +227,10 @@
 		example = document.getElementById('plane');
 
 		
+		var colorscale = [[0.0, 'rgb(51,181,229)'],
+		[0.5, 'rgb(240,240,240)'],
+	 	[1.0, 'rgb(51,181,229))']];
+
 		z1 = [];
 		var sample_points = 20;
 		for (var i = 0; i < sample_points; i++) {
@@ -262,14 +283,21 @@
 		}
 		
 
-		var data_z1 = {z: z1, type: 'surface'};
+		var data_z1 = {
+			z: z1, 
+			name:"Decision Boundary",
+			type: 'surface',
+			colorscale: colorscale
+		};
 		data_points = {
 		x:sx, y: sy, z: sz,
 		showlegend: false,
 		name:'Training Set',
 		mode: 'markers',
 		marker: {
-			size: 12,
+			size: 8,
+			symbol:'diamond',
+			color: 'rgba(0,255,0,.9)',
 			line: {
 			color: 'rgba(0, 0, 0, 0.14)',
 			width: 0.5},
@@ -282,7 +310,8 @@
 			name:'Training Set',
 			mode: 'markers',
 			marker: {
-				size: 12,
+				size: 8,
+				color: 'rgba(0,0,255,.9)',
 				line: {
 				color: 'rgba(140, 140, 0, 0.14)',
 				width: 0.5},
