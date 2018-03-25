@@ -37,6 +37,7 @@
 	var min_x_data = Math.min.apply(Math, x_data);
 	var max_x_data = Math.max.apply(Math, x_data);
 	var min_y_data = Math.min.apply(Math, y_data);
+
 	var max_y_data = Math.max.apply(Math, y_data);
 	var split = 150;
 
@@ -170,6 +171,8 @@
 			z1.push(next_z);
 		}
 
+		//Train set
+
 		var sx = []
 		var sy = []
 		var sz = []
@@ -211,11 +214,11 @@
 			colorscale: colorscale,
 			opacity: .95
 		};
-		data_points = {
+		train_points = {
 		x:sx, y: sy, z: sz,
 		showlegend: false,
 
-		name:'Points Defining the Decision Boundary',
+		name:'Training Set',
 		mode: 'markers',
 		marker: {
 			symbol:'diamond',
@@ -223,8 +226,8 @@
 			color: "rgb(51,181,229)",
 			opacity: 0.8},
 		type: 'scatter3d'
-	};
-		data_points2 = {
+		};
+		train_points2 = {
 			x:sx2, y: sy2, z: sz2,
 			showlegend: false,
 			name:'Training Set',
@@ -238,8 +241,84 @@
 				opacity: 0.8},
 			type: 'scatter3d'
 		};
-		Plotly.newPlot('plane', [data_z1, data_points, data_points2]);
+
+		//Test set
+
+		var z_offsets = [1.1, 3.2, 2.3, 4.6, 2.8, 1.3, 3.1, 1.3, 2.2, 8.1];
+		var x_vals = [5.1, 7.8, 8.5, 10.3, 12.7, 4.3, 3.2, 4.7, 14.2, 18.2];
+		var y_vals = [6.8, 8.4, 3.3, 12.8, 14.4, 8.3, 1.3, 5.1, 4.31, 3.21];
+		var tz = [];
+		var tx = [];
+		var ty = [];
+		var scatter_samples = 10;
+
+		for (var i = 0; i < scatter_samples / 2 - 1; i++) {
+			var x = x_vals[i];
+			var y = y_vals[i];
+			var z = y - x/4 + intercept + z_offsets[i];
+			tz.push(z);
+			tx.push(x);
+			ty.push(y);
+
+		}
+
+		var x = x_vals[scatter_samples/2 - 1];
+		var y = y_vals[scatter_samples/2 - 1];
+		var z = y - x/4 + intercept - z_offsets[i];
+		tx.push(x);
+		ty.push(y);
+		tz.push(z);
+
+
+		var tx2 = []
+		var ty2 = []
+		var tz2 = []
+		for (var i = scatter_samples / 2; i < scatter_samples; i++) {
+			var x = x_vals[i];
+			var y = y_vals[i];
+			var z = y - x/4 + intercept - z_offsets[i];
+			tx2.push(x);
+			ty2.push(y);
+			tz2.push(z);
+		}
+
+		
+
+	
+		var test_points = {
+		x:tx, y: ty, z: tz,
+		showlegend: false,
+
+		name:'Test Set',
+		mode: 'markers',
+		marker: {
+			symbol:'diamond',
+			size: 8,
+			color: "rgb(51,181,229)",
+			opacity: 0.8},
+		type: 'scatter3d'
+		};
+		test_points2 = {
+			x:tx2, y: ty2, z: tz2,
+			showlegend: false,
+			name:'Test Set',
+			mode: 'markers',
+			marker: {
+				size: 8,
+				color: 'rgba(0,0,255,.9)',
+				line: {
+				color: 'rgba(140, 140, 0, 0.14)',
+				width: 0.5},
+				opacity: 0.8},
+			type: 'scatter3d'
+		};
+
+
+		Plotly.newPlot('plane', [data_z1, train_points, train_points2, test_points, test_points2]);
 	}
+
+
+
 
 	function exampleParabola() {
 		example = document.getElementById('parabola');
@@ -431,6 +510,24 @@
 		Plotly.restyle('parabola', layout_train, 2);
 		Plotly.restyle('parabola', layout_test, 3);
 		Plotly.restyle('parabola', layout_test, 4);
+
+
+	}
+
+	function planeVisibility() {
+
+		bPlaneTest = !bPlaneTest;
+		layout_test = {
+			visible: bPlaneTest
+		}
+		layout_train = {
+			visible: !bPlaneTest
+		}
+
+		Plotly.restyle('plane', layout_train, 1);
+		Plotly.restyle('plane', layout_train, 2);
+		Plotly.restyle('plane', layout_test, 3);
+		Plotly.restyle('plane', layout_test, 4);
 
 
 	}
