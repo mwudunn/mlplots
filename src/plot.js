@@ -38,7 +38,7 @@
 	var max_x_data = Math.max.apply(Math, x_data);
 	var min_y_data = Math.min.apply(Math, y_data);
 	var max_y_data = Math.max.apply(Math, y_data);
-	var split = 5;
+	var split = 150;
 
 	var x = [];
 	var y = [];
@@ -54,31 +54,16 @@
 	}
 
 
-	//calculate the meshgrid of x and y
-	var xx = [];
-	var yy = [];
-	var zz = [];
-
-	for (var j = 0; j < y.length; j++) {
-		var next_arr_x = [];
-		var next_arr_y = [];
-		for (var i = 0; i < x.length; i++) {
-			next_arr_x.push(x[i]);
-			next_arr_y.push(y[j]);
-		}
-		xx.push(next_arr_x);
-		yy.push(next_arr_y);
-	}
-
 	//calculate z
-	for (var j = 0; j < y.length; j++) {
-		var next_arr_z = [];
-		for (var i = 0; i < x.length; i++) {
-			var next_z = (intercept - xx[j][i] * x_eq - yy[j][i] * y_eq) / z_eq;
-			next_arr_z.push(next_z);
+	for (var i = 0; i < split; i++) {
+		var next_z = []
+		for (var j = 0; j < split; j++) {
+			var global_plane = (-x_eq * x[j] - y_eq * y[i] - intercept) /z_eq;
+			next_z.push(global_plane);
 		}
-		zz.push(next_arr_z);
+		z.push(next_z);
 	}
+	
 
 
 	all = {
@@ -102,9 +87,9 @@
 
 
 	plane = {
-		x:xx, 
-		y:yy, 
-		z:zz,
+		x:x, 
+		y:y, 
+		z:z,
 		
 	    colorscale: colorscale,
 	    
