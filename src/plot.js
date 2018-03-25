@@ -161,6 +161,7 @@
 		example = document.getElementById('parabola');
 
 		
+		
 		var colorscale = [[0.0, 'rgb(51,181,229)'],
 		[0.5, 'rgb(240,240,240)'],
 	 	[1.0, 'rgb(51,181,229))']];
@@ -203,19 +204,17 @@
 			type: 'surface',
 			name:"Decision Boundary",
 			colorscale: colorscale,
+			opacity: .95
 		};
 		data_points = {
 		x:sx, y: sy, z: sz,
 		showlegend: false,
-		name:'Training Set (P)',
+		name:'Points Defining the Decision Boundary',
 		mode: 'markers',
 		marker: {
-			symbol:200,
-			color: 'blue',
-			size: 12,
-			line: {
-			color: 'rgba(0, 0, 0, 1)',
-			width: 0.5},
+			symbol:'diamond',
+			size: 8,
+			color: "rgb(51,181,229)",
 			opacity: 0.8},
 		type: 'scatter3d'
 	};
@@ -226,6 +225,7 @@
 	function examplePlane() {
 		example = document.getElementById('plane');
 
+		
 		
 		var colorscale = [[0.0, 'rgb(51,181,229)'],
 		[0.5, 'rgb(240,240,240)'],
@@ -287,35 +287,31 @@
 			z: z1, 
 			name:"Decision Boundary",
 			type: 'surface',
-			colorscale: colorscale
+			colorscale: colorscale,
+			opacity: .7,
 		};
 		data_points = {
 		x:sx, y: sy, z: sz,
 		showlegend: false,
-		name:'Training Set',
+		name:'Scatter Set 1',
 		mode: 'markers',
 		marker: {
+			symbol:'circle-open',
 			size: 8,
-			symbol:'diamond',
-			color: 'rgba(0,255,0,.9)',
-			line: {
-			color: 'rgba(0, 0, 0, 0.14)',
-			width: 0.5},
+			color: 'red',
 			opacity: 0.8},
 		type: 'scatter3d'
 	};
 		data_points2 = {
 			x:sx2, y: sy2, z: sz2,
 			showlegend: false,
-			name:'Training Set',
+			name:'Scatter Set 2',
 			mode: 'markers',
 			marker: {
+				symbol:'circle-open',
 				size: 8,
-				color: 'rgba(0,0,255,.9)',
-				line: {
-				color: 'rgba(140, 140, 0, 0.14)',
-				width: 0.5},
-				opacity: 0.8},
+				color: "rgb(51,181,229)",
+			},
 			type: 'scatter3d'
 		};
 		Plotly.newPlot('plane', [data_z1, data_points, data_points2]);
