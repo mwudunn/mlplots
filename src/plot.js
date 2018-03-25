@@ -8,140 +8,234 @@
 	var validation = {};
 	var plane = {}; 
 
-	Plotly.d3.csv('../data/train_PCA_all.csv', function(err, rows){
+	Plotly.d3.csv('../data/train_PCA.csv', function(err, rows){
 
-	function unpack(rows, key) {
-	  return rows[key]; ;
-	}
-	  
-	var z_data=[];
-	var y_data = [];
-	var x_data = [];
-
-	//parse the rows of the csv file and write into above arrays
-	for(i=0;i<rows.length;i++)
-	{
-	  var row = unpack(rows,i);
-	  x_data.push(parseFloat(row['x']));
-	  y_data.push(parseFloat(row['y']));
-	  z_data.push(parseFloat(row['z']));
-
-	}
-
-	//initialize equations
-	x_eq = parseFloat('1.55937729e-05');
-	y_eq = parseFloat('-2.27575413e-05');
-	z_eq = parseFloat('-1.45547286e-06');
-	intercept = parseFloat('-0.421052631579');
-
-	var min_x_data = Math.min.apply(Math, x_data);
-	var max_x_data = Math.max.apply(Math, x_data);
-	var min_y_data = Math.min.apply(Math, y_data);
-	var max_y_data = Math.max.apply(Math, y_data);
-	var split = 150;
-
-	var x = [];
-	var y = [];
-	var z = [];
-
-	//calculate the linspace of x,y
-	for (var i = 0; i < split; i++) {
-		var next_x = min_x_data + i * (max_x_data - min_x_data) / split;
-		var next_y = min_y_data + i * (max_y_data - min_y_data) / split;
-		x.push(next_x);
-		y.push(next_y);
-		
-	}
-
-
-	//calculate z
-	for (var i = 0; i < split; i++) {
-		var next_z = []
-		for (var j = 0; j < split; j++) {
-			var global_plane = (-x_eq * x[j] - y_eq * y[i] - intercept) /z_eq;
-			next_z.push(global_plane);
+		function unpack(rows, key) {
+		  return rows[key]; ;
 		}
-		z.push(next_z);
-	}
-	
+		  
+
+		var z_data=[];
+		var y_data = [];
+		var x_data = [];
+
+		var all_z_data=[];
+		var all_y_data = [];
+		var all_x_data = [];
+
+		var aml_z_data=[];
+		var aml_y_data = [];
+		var aml_x_data = [];
+
+		//parse the rows of the csv file and write into above arrays
+		for(i=0;i<rows.length;i++)
+		{
+		  var row = unpack(rows,i);
+		  if (row['label'] == 'ALL') {
+		  	all_x_data.push(parseFloat(row['x']));
+			all_y_data.push(parseFloat(row['y']));
+			all_z_data.push(parseFloat(row['z']));
+		  } else {
+		  	aml_x_data.push(parseFloat(row['x']));
+			aml_y_data.push(parseFloat(row['y']));
+			aml_z_data.push(parseFloat(row['z']));
+		  }
+		  x_data.push(parseFloat(row['x']));
+		  y_data.push(parseFloat(row['y']));
+		  z_data.push(parseFloat(row['z']));
+
+		}
 
 
-	all = {
-		x:x_data, y: y_data, z: z_data,
-		visible: bvalidation,
-		showlegend: false,
-		name:'ALL set',
-		mode: 'markers',
 		
-		marker: {
-			size: 8,
-			symbol:'diamond-open',
-			color: "rgb(51,181,229)",
-			},
-		type: 'scatter3d'
-	};
+		training_aml = {
+			x:aml_x_data, y: aml_y_data, z: aml_z_data,
+			
+			showlegend: true,
+			name:'training ALL set',
 
-	var colorscale = [[0.0, 'rgb(51,181,229)'],
-		[0.5, 'rgb(240,240,240)'],
-	 	[1.0, 'rgb(51,181,229))']];
+			mode: 'markers',
+			marker: {
+				symbol:'diamond-open',
+				size: 8,
+				color: 'red',
+				line: {
+				color: 'rgba(0, 0, 0, 0.14)',
+				width: 0.5},
+				opacity: 0.9},
+			type: 'scatter3d'
+		};
+
+		training_all = {
+			x:all_x_data, y: all_y_data, z: all_z_data,
+			
+			showlegend: true,
+			name:'training AML set',
+
+			mode: 'markers',
+			marker: {
+				symbol:'diamond-open',
+				size: 8,
+				color: 'blue',
+				line: {
+				color: 'rgba(0, 0, 0, 0.14)',
+				width: 0.5},
+				opacity: 0.9},
+			type: 'scatter3d'
+		};
+
+		//initialize equations
+		x_eq = parseFloat('1.55937729e-05');
+		y_eq = parseFloat('-2.27575413e-05');
+		z_eq = parseFloat('-1.45547286e-06');
+		intercept = parseFloat('-0.421052631579');
+
+		var min_x_data = Math.min.apply(Math, x_data);
+		var max_x_data = Math.max.apply(Math, x_data);
+		var min_y_data = Math.min.apply(Math, y_data);
+		var max_y_data = Math.max.apply(Math, y_data);
+		var split = 5;
+
+		var x = [];
+		var y = [];
+		var z = [];
+
+		//calculate the linspace of x,y
+		for (var i = 0; i < split; i++) {
+			var next_x = min_x_data + i * (max_x_data - min_x_data) / split;
+			var next_y = min_y_data + i * (max_y_data - min_y_data) / split;
+			x.push(next_x);
+			y.push(next_y);
+			
+		}
 
 
-	plane = {
-		x:x, 
-		y:y, 
-		z:z,
-		
-	    colorscale: colorscale,
-	    
-		name: 'Decision Boundary',
-		type: 'surface',
-		opacity: .7
-	}	  
+		//calculate the meshgrid of x and y
+		var xx = [];
+		var yy = [];
+		var zz = [];
+
+		for (var j = 0; j < y.length; j++) {
+			var next_arr_x = [];
+			var next_arr_y = [];
+			for (var i = 0; i < x.length; i++) {
+				next_arr_x.push(x[i]);
+				next_arr_y.push(y[j]);
+			}
+			xx.push(next_arr_x);
+			yy.push(next_arr_y);
+		}
+
+		//calculate z
+		for (var j = 0; j < y.length; j++) {
+			var next_arr_z = [];
+			for (var i = 0; i < x.length; i++) {
+				var next_z = (intercept - xx[j][i] * x_eq - yy[j][i] * y_eq) / z_eq;
+				next_arr_z.push(next_z);
+			}
+			zz.push(next_arr_z);
+		}
+
+
+
+		var colorscale = [[0.0, 'rgb(51,181,229)'],
+			[0.5, 'rgb(240,240,240)'],
+		 	[1.0, 'rgb(51,181,229))']];
+
+
+		plane = {
+			x:xx, 
+			y:yy, 
+			z:zz,
+			
+		    colorscale: colorscale,
+		    
+			name: 'Decision Boundary',
+			type: 'surface',
+			opacity: .95
+		}	  
 	
 	});
 
 
-	Plotly.d3.csv('../data/train_PCA_aml.csv', function(err, rows){
+	Plotly.d3.csv('../data/test_PCA.csv', function(err, rows){
+		function unpack(rows, key) {
+		  return rows[key]; ;
+		}
+		  
+		var z_data=[];
+		var y_data = [];
+		var x_data = [];
 
-	function unpack(rows, key) {
-	  return rows[key]; ;
-	}
-	  
-	var z_data=[];
-	var y_data = [];
-	var x_data = [];
+		var all_z_data=[];
+		var all_y_data = [];
+		var all_x_data = [];
 
-	//parse the rows of the csv file and write into above arrays
-	for(i=0;i<rows.length;i++)
-	{
-	  var row = unpack(rows,i);
-	  x_data.push(parseFloat(row['x']));
-	  y_data.push(parseFloat(row['y']));
-	  z_data.push(parseFloat(row['z']));
+		var aml_z_data=[];
+		var aml_y_data = [];
+		var aml_x_data = [];
 
-	}
+		//parse the rows of the csv file and write into above arrays
+		for(i=0;i<rows.length;i++)
+		{
+		  var row = unpack(rows,i);
+		  if (row['label'] == 'ALL') {
+		  	all_x_data.push(parseFloat(row['x']));
+			all_y_data.push(parseFloat(row['y']));
+			all_z_data.push(parseFloat(row['z']));
+		  } else {
+		  	aml_x_data.push(parseFloat(row['x']));
+			aml_y_data.push(parseFloat(row['y']));
+			aml_z_data.push(parseFloat(row['z']));
+		  }
+		  x_data.push(parseFloat(row['x']));
+		  y_data.push(parseFloat(row['y']));
+		  z_data.push(parseFloat(row['z']));
 
-	aml = {
-		x:x_data, y: y_data, z: z_data,
-		visible: bvalidation,
-		showlegend: false,
-		name:'AML set',
+		}
 
-		mode: 'markers',
-		marker: {
-			symbol:'circle-open',
-			size: 8,
-			color: 'red',
-			line: {
-			color: 'rgba(0, 0, 0, 0.14)',
-			width: 0.5},
-			opacity: 0.9},
-		type: 'scatter3d'
-	};
+		test_aml = {
+			x:aml_x_data, y: aml_y_data, z: aml_z_data,
+			visible: bvalidation,
+			showlegend: true,
+			name:'test ALL set',
+
+			mode: 'markers',
+			marker: {
+				symbol:'circle-open',
+				size: 8,
+				color: 'red',
+				line: {
+				color: 'rgba(0, 0, 0, 0.14)',
+				width: 0.5},
+				opacity: 0.9},
+			type: 'scatter3d'
+		};
+
+		test_all = {
+			x:all_x_data, y: all_y_data, z: all_z_data,
+			visible: bvalidation,
+			showlegend: true,
+			name:'test AML set',
+
+			mode: 'markers',
+			marker: {
+				symbol:'circle-open',
+				size: 8,
+				color: 'blue',
+				line: {
+				color: 'rgba(0, 0, 0, 0.14)',
+				width: 0.5},
+				opacity: 0.9},
+			type: 'scatter3d'
+		};
 
 
-	data = [all, aml, plane];
-	Plotly.newPlot('tester', data);
+		data = [training_all,training_aml,test_all,test_aml, plane];
+		layout = {
+			showlegend:true
+		}
+		Plotly.newPlot('tester', data,layout);
 
 	});
 
@@ -218,7 +312,7 @@
 		name:'Points Defining the Decision Boundary',
 		mode: 'markers',
 		marker: {
-			symbol:'diamond',
+			symbol:'diamond-open',
 			size: 8,
 			color: "rgb(51,181,229)",
 			opacity: 0.8},
@@ -232,10 +326,9 @@
 			marker: {
 				size: 8,
 				color: 'rgba(0,0,255,.9)',
-				line: {
-				color: 'rgba(140, 140, 0, 0.14)',
-				width: 0.5},
-				opacity: 0.8},
+				symbol:'diamond-open',
+				opacity: .8
+			},
 			type: 'scatter3d'
 		};
 		Plotly.newPlot('plane', [data_z1, data_points, data_points2]);
@@ -309,12 +402,12 @@
 			name:"Decision Boundary",
 			type: 'surface',
 			colorscale: colorscale,
-			opacity: .7,
+			opacity: .95,
 		};
 		train_points = {
 		x:sx, y: sy, z: sz,
 		showlegend: false,
-		name:'Scatter Set 1',
+		name:'Training Set 1',
 		mode: 'markers',
 		marker: {
 			symbol:'circle-open',
@@ -325,8 +418,8 @@
 		};
 		train_points2 = {
 			x:sx2, y: sy2, z: sz2,
-			showlegend: false,
-			name:'Scatter Set 2',
+			showlegend: true,
+			name:'Training Set 2',
 			mode: 'markers',
 			marker: {
 				symbol:'circle-open',
@@ -382,33 +475,29 @@
 	
 		var test_points = {
 		x:tx, y: ty, z: tz,
-		showlegend: false,
+		showlegend: true,
 		visible: false,
-		name:'Test Set',
+		name:'Test Set 1',
 		mode: 'markers',
 		marker: {
+			symbol:'diamond-open',
 			size: 8,
-			symbol:'diamond',
-			color: 'rgba(0,255,0,.9)',
-			line: {
-			color: 'rgba(0, 0, 0, 0.14)',
-			width: 0.5},
+			color: 'red',
 			opacity: 0.8},
 		type: 'scatter3d'
 		};
 		var test_points2 = {
 			x:tx2, y: ty2, z: tz2,
-			showlegend: false,
+			showlegend: true,
 			visible: false,
-			name:'Test Set',
+			name:'Test Set 2',
 			mode: 'markers',
 			marker: {
+				symbol:'diamond-open',
 				size: 8,
-				color: 'rgba(0,0,255,.9)',
-				line: {
-				color: 'rgba(140, 140, 0, 0.14)',
-				width: 0.5},
-				opacity: 0.8},
+				color: "rgb(51,181,229)",
+				opacity: 0.8
+			},
 			type: 'scatter3d'
 		};
 
@@ -437,11 +526,12 @@
 
 
 	function hideValidation() {
-		data = [train, validation, plane];
+		data = [training_all, training_aml,test_all,test_aml, plane];
 
 		bvalidation = !bvalidation;
 		layout = {
-			visible: bvalidation
+			visible: bvalidation,
+			showlegend: true
 		}
 
 		Plotly.restyle('tester', layout, 1);
