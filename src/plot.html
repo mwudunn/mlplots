@@ -4,8 +4,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.5.1/math.min.js"></script>
 	<script src="plot.js"></script>
 </head>
-<div id="tester" style="width:1000px;height:700px;"></div>
-<button id="validation" onclick="hideValidation()"> Show/Hide Validation Set</button>
+<div id="MLdata" style="width:1000px;height:700px;"></div>
+<button id="MLplane" onclick="MLShowPlane()">Plane Boundary</button>
+<button id="MLparabola" onclick="MLShowParabola()">Parabola Boundary</button>
+<button id="MLnone" onclick="MLHideBoundary()">No Boundary</button>
+
 
 <div id="parabola" style="width:1000px;height:700px;"></div>
 <button id="displayParabola" onclick="exampleParabola()"> Display data</button>

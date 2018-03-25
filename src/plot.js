@@ -1,14 +1,15 @@
 $( document ).ready(function() {
-	TESTER = document.getElementById('tester');
+	MLdata = document.getElementById('MLdata');
 	bvalidation = true;
 	bPlaneTest = false;
 	bParabolaTest = false;
 
-	var train = {};
-	var validation = {};
+	var training_all = {};
+	var training_aml = {};
+	var parabola = {};
 	var plane = {}; 
 
-	Plotly.d3.csv('../data/train_PCA.csv', function(err, rows){
+	Plotly.d3.csv('../data/train_PCA_normalized.csv', function(err, rows){
 
 		function unpack(rows, key) {
 		  return rows[key]; ;
@@ -45,6 +46,7 @@ $( document ).ready(function() {
 		  z_data.push(parseFloat(row['z']));
 
 		}
+
 
 		
 		training_aml = {
@@ -83,16 +85,19 @@ $( document ).ready(function() {
 			type: 'scatter3d'
 		};
 
-		//initialize equations
-		x_eq = parseFloat('1.55937729e-05');
-		y_eq = parseFloat('-2.27575413e-05');
-		z_eq = parseFloat('-1.45547286e-06');
+		//initialize equations for the plane
+		x_eq = parseFloat('0.04820578');
+		y_eq = parseFloat('-0.05290853');
+		z_eq = parseFloat('-0.00197103');
 		intercept = parseFloat('-0.421052631579');
 
 		var min_x_data = Math.min.apply(Math, x_data);
 		var max_x_data = Math.max.apply(Math, x_data);
 		var min_y_data = Math.min.apply(Math, y_data);
 		var max_y_data = Math.max.apply(Math, y_data);
+
+		max_y_data = max_y_data * 2 / 3;
+		min_x_data = min_x_data * 2 / 3;
 		var split = 5;
 
 		var x = [];
@@ -120,7 +125,6 @@ $( document ).ready(function() {
 		}
 
 
-
 		var colorscale = [[0.0, 'rgb(51,181,229)'],
 			[0.5, 'rgb(240,240,240)'],
 		 	[1.0, 'rgb(51,181,229))']];
@@ -136,12 +140,66 @@ $( document ).ready(function() {
 			name: 'Decision Boundary',
 			type: 'surface',
 			opacity: .95
-		}	  
+		}	
+
+		//initialize equations for the paraboloid
+		x_p = parseFloat('5.27686946e-02');
+		x_sq_p = parseFloat('-1.09643754e-03');
+		xy_p = parseFloat('9.59967953e-04');
+		xz_p = parseFloat('7.72753386e-04');
+		y_p = parseFloat('-7.08321873e-02');
+		y_sq_p = parseFloat('9.72229635e-04');
+		yz_p = parseFloat('-7.29964534e-04');
+		z_p = parseFloat(' 1.06694480e-02');
+		z_sq_p = parseFloat('-2.97527472e-06')
+		intercept_p = parseFloat('-0.391230128041');
+
+
+
+		para_z = []
+		para_x = []
+		para_y = []
+		max_y_data = max_y_data * 2 / 3;
+		min_x_data = min_x_data * 2 / 3;
+		var para_points = 1000.0;
+
+		for (var i = min_y_data; i < max_y_data; i += (max_y_data - min_y_data) / para_points) {
+			var next_z = []
+			para_y.push(i);
+
+			for (var j = min_x_data; j < max_x_data; j += (max_x_data - min_x_data) / para_points) {
+				para_x.push(j);
+
+				// var rand_offset = Math.pow(Math.e, -(Math.pow((j-xdisp),2)/30 - (Math.pow((i-ydisp),2)/60));
+				// console.log(rand_offset);
+				var a = z_sq_p;
+				var b = yz_p * i + xz_p * j + z_p;
+				var c = intercept_p + (xy_p * i + x_p + x_sq_p * j) * j + (y_p + y_sq_p * i) * i
+				var n = b * b - 4.0 * a * c;
+
+				var global_paraboloid = (-b + Math.sqrt(b * b - 4.0 * a * c)) / (2.0 * a);
+				next_z.push(global_paraboloid);
+			}
+			para_z.push(next_z);
+		}
+
+
+		parabola = {
+			x: para_x,
+			y: para_y,
+			z: para_z, 
+			visible: false,
+			name:"Decision Boundary",
+			type: 'surface',
+			colorscale: colorscale,
+			opacity: .95,
+		};
+
 	
 	});
 
 
-	Plotly.d3.csv('../data/test_PCA.csv', function(err, rows){
+	Plotly.d3.csv('../data/test_PCA_normalized.csv', function(err, rows){
 		function unpack(rows, key) {
 		  return rows[key]; ;
 		}
@@ -213,12 +271,14 @@ $( document ).ready(function() {
 			type: 'scatter3d'
 		};
 
+		
 
-		data = [training_all,training_aml,test_all,test_aml, plane];
+
+		data = [training_aml, training_all, test_aml, test_all, plane,parabola];
 		layout = {
 			showlegend:true
 		}
-		Plotly.newPlot('tester', data,layout);
+		Plotly.newPlot('MLdata', data,layout);
 
 	});
 });
@@ -607,6 +667,43 @@ $( document ).ready(function() {
 
 	}
 
+	function MLShowParabola() {
+		layout_parabola = {
+			visible: true
+		}
+		layout_plane = {
+			visible: false
+		}
+
+		Plotly.restyle('MLdata', layout_plane, 4);
+		Plotly.restyle('MLdata', layout_parabola, 5);
+	}
+
+	function MLShowPlane() {
+		layout_parabola = {
+			visible: false
+		}
+		layout_plane = {
+			visible: true
+		}
+
+		Plotly.restyle('MLdata', layout_plane, 4);
+		Plotly.restyle('MLdata', layout_parabola, 5);
+	}
+
+
+	function MLHideBoundary() {
+		layout_parabola = {
+			visible: false
+		}
+		layout_plane = {
+			visible: false
+		}
+
+		Plotly.restyle('MLdata', layout_plane, 4);
+		Plotly.restyle('MLdata', layout_parabola, 5);
+	}
+
 
 	function hideValidation() {
 		data = [training_all, training_aml,test_all,test_aml, plane];
@@ -619,4 +716,14 @@ $( document ).ready(function() {
 
 		Plotly.restyle('tester', layout, 1);
 
+	}
+
+	function hideBoundaries() {
+
+		layout = {
+			visible: false,
+			showlegend: true
+		}
+
+		Plotly.restyle('tester', layout, 1);
 	}
