@@ -58,6 +58,9 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="../css/custom.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
 
 	 <!-- Bootstrap core JavaScript -->
     <script src="../vendor/jquery/jquery.min.js"></script>
@@ -83,15 +86,17 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
+              <a class="nav-link" href="home.html">Home
               </a>
+                <span class="sr-only">(current)</span>
+
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Introduction</a>
+              <a class="nav-link" href="#">Background</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Machine Learning</a>
+              <a class="nav-link" href="ML.html">Machine Learning</a>
+
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Case Study</a>
@@ -101,41 +106,29 @@
       </div>
     </nav>
 
-    <div style="background: linear-gradient(to bottom right, #2f4888 0%, #26708f 51%, #2ea494 75%);">
+    <div style="background: linear-gradient(to bottom right, #2f4888 0%, #26708f 51%, #2ea494 75%); height: 100%;">
         <!-- Page Content -->
-	    <div class="container" style="padding-top: 40px;">
+	    <div class="container" style="padding-top: 40px;height: 100vh;">
 	    	
 
-			<div class="row">
-				<div class="col-md-12 text-center fadein" style="margin-left:1px;margin-right:1px; margin-bottom: 10px; padding-left:1px;padding-right:1px;">
-					<button id="displayParabola" class="button" style="width: 180px;height: 80px;" onclick="exampleParabola()"> Display data</button>
-					<button id="visibleParabola" class="button" style="width: 180px;height: 80px;padding-right: 0px;padding-left:0px;" onclick="parabolaVisibility()"> Show/Hide Test Set</button>
+			<div class="row" style="padding-top: 100px;">
+				<div class="col-md-12 fadein" style="margin-left:1px;margin-right:1px; margin-bottom: 10px; padding-left:1px;padding-right:1px;">
+					<h1 class="subtitle" style="font-size: 3.5rem;color: white;"> Interactive Demo</h1>
 				</div>
 			</div>
-			<div class="row center-block">
-				<div class="col-md-10 offset-md-1 text-center fadein">
-					<div id="parabola" style="width:100%;height:700px;"></div>
+			<div class="row" style="padding-top: 5px; margin-bottom: 20px;color: white;">
+				<div class="col-md-10 fadein" style="padding-left:0px; ">
+					<span>Welcome to the Nucle.ai interactive demo! In this demo we demonstrate that, with robust machine learning techniques, it is possible to accurately categorize leukemia patients into specific subtypes. This allows treatments to be focused on their respective leukemia strain, leading to more effective outcomes for patients.
+					</span>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="col-md-12 text-center fadein" style="margin-left:1px;margin-right:1px; padding-left:1px;padding-right:1px;">
-					<button id="MLplane" class="button" style="width: 180px;height: 80px" onclick="MLShowPlane()">Plane</button>
-					<button id="MLparabola" class="button" style="width: 180px;height: 80px;" onclick="MLShowParabola()">Parabola</button>
-					<button id="MLnone" class="button" style="width: 180px;height: 80px;" onclick="MLHideBoundary()">No Boundary</button>
+			<div class="row" style="padding-top: 15px;color: white;">
+				<div class="col-md-8 fadein" style="padding-left:0px; ">
+					<button id="background" class="nav-button" href="background.html">Begin the Demo &nbsp;&nbsp;&nbsp;&nbsp;<img src="../resources/arrow.png" height="30"></button>
 				</div>
 			</div>
-			<div class="row center-block">
-				<div id="MLdata" style="width:800px;height:500px;"></div>
-			</div>
-			
 
 			
-
-
-			<div id="plane" style="width:800px;height:500px;"></div>
-			<button id="displayPlane" onclick="examplePlane()"> Display data</button>
-			<button id="visibleParabola" onclick="planeVisibility()"> Show/Hide Test Set</button>
 		</div>
 	    <!-- /.container -->
     </div>

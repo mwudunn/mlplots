@@ -1,6 +1,6 @@
 .button {
 	background-color: #3b8fc8;
-	border-top-color: #4cafe3;
+	border-top-color: #9dd925;
 	border-bottom-color: #4cafe3;
 
 	border-top-width: 4px;
@@ -14,6 +14,21 @@
 	font-weight: 500;
 	font-family: avenir;
 
+}
+
+.nav-button {
+	background-color: #3b8fc8;
+
+	border-width: 0px;
+	padding: 15px 32px;
+	color: #ffffff;
+	font-weight: 500;
+	font-family: avenir;
+}
+
+.nav-button:hover {
+	background-color: #4cafe3;
+	cursor:pointer;
 }
 
 .nav-border {
@@ -30,6 +45,7 @@
 	color: #3b8fc8;
 
 	border-top-color: #ecb761;
+	cursor:pointer;
 
 }
 
