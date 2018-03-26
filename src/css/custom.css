@@ -9,7 +9,7 @@
 	border-radius: 1px;
 	border-left-width: 0px;
 	border-right-width: 0px;
-	padding: 15px 32px;
+	padding: 10px 20px;
 	color: #ffffff;
 	font-weight: 500;
 	font-family: avenir;
@@ -61,6 +61,12 @@
 .fadein-long {
 	 animation:2s ease 1s normal forwards 1 fadein;
 -webkit-animation:2s ease 1s normal forwards 1 fadein;
+opacity:0
+
+}
+.fadein-extralong {
+	 animation:3s ease 1.5s normal forwards 1 fadein;
+-webkit-animation:3s ease 1.5s normal forwards 1 fadein;
 opacity:0
 
 }
