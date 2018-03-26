@@ -1,48 +1,3 @@
-<!-- <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.5.1/math.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/custom.css">
-
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="plot.js"></script>
-</head>
-<body style="background: linear-gradient(to bottom right, #2f4888 0%, #26708f 51%, #2ea494 75%);">
-    <div class="container">
-    	
-
-		<div class="row">
-			<div class="col-md-12 text-center fadein" style="margin-left:1px;margin-right:1px; padding-left:1px;padding-right:1px;">
-				<button id="displayParabola" class="button" style="width: 180px;height: 80px;" onclick="exampleParabola()"> Display data</button>
-				<button id="visibleParabola" class="button" style="width: 180px;height: 80px;padding-right: 0px;padding-left:0px;" onclick="parabolaVisibility()"> Show/Hide Test Set</button>
-			</div>
-		</div>
-		<div class="row center-block">
-			<div id="parabola" style="width:800px;height:700px;"></div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-12 text-center fadein" style="margin-left:1px;margin-right:1px; padding-left:1px;padding-right:1px;">
-				<button id="MLplane" class="button" style="width: 180px;height: 80px" onclick="MLShowPlane()">Plane</button>
-				<button id="MLparabola" class="button" style="width: 180px;height: 80px;" onclick="MLShowParabola()">Parabola</button>
-				<button id="MLnone" class="button" style="width: 180px;height: 80px;" onclick="MLHideBoundary()">No Boundary</button>
-			</div>
-		</div>
-		<div class="row center-block">
-			<div id="MLdata" style="width:800px;height:500px;"></div>
-		</div>
-		
-
-		
-
-
-		<div id="plane" style="width:800px;height:500px;"></div>
-		<button id="displayPlane" onclick="examplePlane()"> Display data</button>
-		<button id="visibleParabola" onclick="planeVisibility()"> Show/Hide Test Set</button>
-	</div>
-</body> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,6 +13,9 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="../css/custom.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
 
 	 <!-- Bootstrap core JavaScript -->
     <script src="../vendor/jquery/jquery.min.js"></script>
@@ -82,14 +40,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="home.html">Home
               </a>
                 <span class="sr-only">(current)</span>
 
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Background</a>
+            <li class="nav-item active">
+              <a class="nav-link" href="background.html">Background</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="ML.html">Machine Learning</a>
@@ -103,26 +61,40 @@
       </div>
     </nav>
 
-    <div style="background: linear-gradient(to bottom right, #2f4888 0%, #26708f 51%, #2ea494 75%);">
+    <div style="background: linear-gradient(to bottom right, #103f54 0%, #19054a 51%, #320554 75%); height: 100%;">
         <!-- Page Content -->
-	    <div class="container" style="padding-top: 40px;">
+	    <div class="container" style="padding-top: 40px;min-height: 100vh;">
 	    	
 
-			<div class="row" style="padding-top: 100px;">
+			<div class="row" style="padding-top: 50px;">
 				<div class="col-md-12 fadein" style="margin-left:1px;margin-right:1px; margin-bottom: 10px; padding-left:1px;padding-right:1px;">
-					<h1 class="subtitle" style="font-size: 3.5rem;color: white;"> Interactive Demo</h1>
+					<h1 class="subtitle" style="font-size: 3.5rem;color: white;"> Cancer</h1>
 				</div>
 			</div>
-			<div class="row" style="padding-top: 5px;color: white;">
-				<div class="col-md-10 fadein" style="padding-left:0px; ">
-					<span>Welcome to the Nucle.ai interactive demo! In this demo we demonstrate that, with robust machine learning techniques, it is possible to accurately categorize leukemia patients into specific subtypes. This allows treatments to be focused on their respective leukemia strain, leading to more effective outcomes for patients.
+			<div class="row" style="padding-top: 5px; margin-bottom: 20px;color: white;">
+				<div class="col-md-10 fadein fadein-long" style="padding-left:0px; ">
+					<span>A disease caused by mutations in cellular growth factor proteins such as RAS and P53, is a major cause of death worldwide. Oncogenesis not only occurs in many different parts of the body, but the problem of cancer locality is exacerbated by many variants of cancer’s ability to metastasize, which is a process by which cancerous cells migrate throughout the body. Metastasis is caused in part by mutations in cell adhesion proteins such as E-Cadherin. This process of metastasis renders many cancer treatments difficult or impractical, as the target of treatment no longer remains localized. Therefore, it is key to correctly identify and localize the source of cancer early in development, as to prepare the most precise and effective treatments.
+
 					</span>
 				</div>
 			</div>
-			<div class="row" style="padding-top: 5px;color: white;">
-				<div class="col-md-8 fadein" style="padding-left:0px; ">
-					<a id="background" class="button" href="background.html">Background</a>
-					
+
+			<div class="row" style="padding-top: 40px;">
+				<div class="col-md-12 fadein" style="margin-left:1px;margin-right:1px; margin-bottom: 10px; padding-left:1px;padding-right:1px;">
+					<h1 class="subtitle" style="font-size: 3.5rem;color: white;"> Leukemia</h1>
+				</div>
+			</div>
+			<div class="row" style="padding-top: 5px; margin-bottom: 20px;color: white;">
+				<div class="col-md-10 fadein fadein-long" style="padding-left:0px; ">
+					<span>One of the major forms of cancer currently affecting children is leukemia. Leukemia is a type of cancer which affects blood cells, causing them to develop either prematurely (Acute), or not go through apoptosis (Chronic). In further specificity, leukemia can be broken into two types: One which primarily affects white blood cells (lymphoblastic), and another which primarily affects red blood cells (myeloid).  Due to the wide subtypes of leukemia, treatment effectiveness can maximized when the proper form of leukemia is identified.
+
+					</span>
+				</div>
+			</div>
+
+			<div class="row" style="padding-top: 15px;margin-bottom: 40px;color: white;">
+				<div class="col-md-8 fadein fadein-long" style="padding-left:0px; ">
+					<a id="background" class="nav-button" href="ML.html">Machine Learning Primer &nbsp;&nbsp;&nbsp;&nbsp;<img src="../resources/arrow.png" height="30"></a>
 				</div>
 			</div>
 

@@ -28,7 +28,9 @@
 
 .nav-button:hover {
 	background-color: #4cafe3;
+	color: white;
 	cursor:pointer;
+	text-decoration: none;
 }
 
 .nav-border {
@@ -54,6 +56,13 @@
     -moz-animation: fadein 2s; /* Firefox */
     -webkit-animation: fadein 2s; /* Safari and Chrome */
     -o-animation: fadein 2s; /* Opera */
+}
+
+.fadein-long {
+	 animation:2s ease 1s normal forwards 1 fadein;
+-webkit-animation:2s ease 1s normal forwards 1 fadein;
+opacity:0
+
 }
 @keyframes fadein {
     from {
