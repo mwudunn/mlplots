@@ -92,7 +92,7 @@ $( document ).ready(function() {
 			name:'Training Set AML',
 			mode: 'markers',
 			marker: {
-				symbol:'diamond-open',
+				symbol:'circle-open',
 				size: 8,
 				color: "rgb(51,181,229)",
 				opacity: 0.8},
@@ -107,7 +107,7 @@ $( document ).ready(function() {
 			marker: {
 				size: 8,
 				color: 'rgba(0,0,255,.9)',
-				symbol:'diamond-open',
+				symbol:'circle-open',
 				opacity: .8
 			},
 			type: 'scatter3d'
@@ -164,7 +164,7 @@ $( document ).ready(function() {
 			visible: false,
 			showscale: false, 
 			marker: {
-				symbol:'diamond',
+				symbol:'diamond-open',
 				size: 8,
 				color: "rgb(51,181,229)",
 				opacity: 0.8},
@@ -179,10 +179,8 @@ $( document ).ready(function() {
 			mode: 'markers',
 			marker: {
 				size: 8,
+				symbol:'diamond-open',
 				color: 'rgba(0,0,255,.9)',
-				line: {
-				color: 'rgba(140, 140, 0, 0.14)',
-				width: 0.5},
 				opacity: 0.8},
 			type: 'scatter3d'
 		};
