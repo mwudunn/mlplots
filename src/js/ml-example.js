@@ -82,25 +82,27 @@ $( document ).ready(function() {
 			name:"Decision Boundary",
 			type: 'surface',
 			colorscale: colorscale,
+			showscale: false,
 			opacity: .95
 		};
 		train_points = {
-		x:sx, y: sy, z: sz,
-		showlegend: false,
-
-		name:'Training Set',
-		mode: 'markers',
-		marker: {
-			symbol:'diamond-open',
-			size: 8,
-			color: "rgb(51,181,229)",
-			opacity: 0.8},
-		type: 'scatter3d'
+			x:sx, y: sy, z: sz,
+			showlegend: true,
+			showscale: false,
+			name:'Training Set AML',
+			mode: 'markers',
+			marker: {
+				symbol:'diamond-open',
+				size: 8,
+				color: "rgb(51,181,229)",
+				opacity: 0.8},
+			type: 'scatter3d'
 		};
 		train_points2 = {
 			x:sx2, y: sy2, z: sz2,
-			showlegend: false,
-			name:'Training Set',
+			showlegend: true,
+			showscale: false,
+			name:'Training Set ALL',
 			mode: 'markers',
 			marker: {
 				size: 8,
@@ -155,24 +157,25 @@ $( document ).ready(function() {
 
 	
 		var test_points = {
-		x:tx, y: ty, z: tz,
-		showlegend: false,
-
-		name:'Test Set',
-		mode: 'markers',
-		visible: false,
-		marker: {
-			symbol:'diamond',
-			size: 8,
-			color: "rgb(51,181,229)",
-			opacity: 0.8},
-		type: 'scatter3d'
+			x:tx, y: ty, z: tz,
+			showlegend: false,
+			name:'Test Set ALL',
+			mode: 'markers',
+			visible: false,
+			showscale: false, 
+			marker: {
+				symbol:'diamond',
+				size: 8,
+				color: "rgb(51,181,229)",
+				opacity: 0.8},
+			type: 'scatter3d'
 		};
 		test_points2 = {
 			x:tx2, y: ty2, z: tz2,
 			visible: false,
 			showlegend: false,
-			name:'Test Set',
+			showscale: false,
+			name:'Test Set AML',
 			mode: 'markers',
 			marker: {
 				size: 8,
@@ -258,13 +261,16 @@ $( document ).ready(function() {
 			z: z1, 
 			name:"Decision Boundary",
 			type: 'surface',
+			showscale: false,
 			colorscale: colorscale,
 			opacity: .95,
+
 		};
 		train_points = {
 		x:sx, y: sy, z: sz,
-		showlegend: false,
-		name:'Training Set 1',
+		showlegend: true,
+		showscale: false,
+		name:'Training Set ALL',
 		mode: 'markers',
 		marker: {
 			symbol:'circle-open',
@@ -276,7 +282,8 @@ $( document ).ready(function() {
 		train_points2 = {
 			x:sx2, y: sy2, z: sz2,
 			showlegend: true,
-			name:'Training Set 2',
+			showscale: false,
+			name:'Training Set AML',
 			mode: 'markers',
 			marker: {
 				symbol:'circle-open',
@@ -333,8 +340,9 @@ $( document ).ready(function() {
 		var test_points = {
 		x:tx, y: ty, z: tz,
 		showlegend: true,
+		showscale: false,
 		visible: false,
-		name:'Test Set 1',
+		name:'Test Set ALL',
 		mode: 'markers',
 		marker: {
 			symbol:'diamond-open',
@@ -346,8 +354,9 @@ $( document ).ready(function() {
 		var test_points2 = {
 			x:tx2, y: ty2, z: tz2,
 			showlegend: true,
+			showscale: false,
 			visible: false,
-			name:'Test Set 2',
+			name:'Test Set AML',
 			mode: 'markers',
 			marker: {
 				symbol:'diamond-open',
@@ -359,7 +368,12 @@ $( document ).ready(function() {
 		};
 
 
-		Plotly.newPlot('parabola', [data_z1, train_points, train_points2, test_points, test_points2]);
+		Plotly.newPlot('parabola', [data_z1, train_points, train_points2, test_points, test_points2], 
+			// {
+			//   paper_bgcolor: 'rgba(0,0,0,0)',
+			//   plot_bgcolor: 'rgba(0,0,0,0)'
+			// }
+			);
 
 	}
 

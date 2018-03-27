@@ -1,48 +1,3 @@
-<!-- <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.5.1/math.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/custom.css">
-
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="plot.js"></script>
-</head>
-<body style="background: linear-gradient(to bottom right, #2f4888 0%, #26708f 51%, #2ea494 75%);">
-    <div class="container">
-    	
-
-		<div class="row">
-			<div class="col-md-12 text-center fadein" style="margin-left:1px;margin-right:1px; padding-left:1px;padding-right:1px;">
-				<button id="displayParabola" class="button" style="width: 180px;height: 80px;" onclick="exampleParabola()"> Display data</button>
-				<button id="visibleParabola" class="button" style="width: 180px;height: 80px;padding-right: 0px;padding-left:0px;" onclick="parabolaVisibility()"> Show/Hide Test Set</button>
-			</div>
-		</div>
-		<div class="row center-block">
-			<div id="parabola" style="width:800px;height:700px;"></div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-12 text-center fadein" style="margin-left:1px;margin-right:1px; padding-left:1px;padding-right:1px;">
-				<button id="MLplane" class="button" style="width: 180px;height: 80px" onclick="MLShowPlane()">Plane</button>
-				<button id="MLparabola" class="button" style="width: 180px;height: 80px;" onclick="MLShowParabola()">Parabola</button>
-				<button id="MLnone" class="button" style="width: 180px;height: 80px;" onclick="MLHideBoundary()">No Boundary</button>
-			</div>
-		</div>
-		<div class="row center-block">
-			<div id="MLdata" style="width:800px;height:500px;"></div>
-		</div>
-		
-
-		
-
-
-		<div id="plane" style="width:800px;height:500px;"></div>
-		<button id="displayPlane" onclick="examplePlane()"> Display data</button>
-		<button id="visibleParabola" onclick="planeVisibility()"> Show/Hide Test Set</button>
-	</div>
-</body> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,7 +20,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.5.1/math.min.js"></script>
-	<script src="../plot.js"></script>
+	<script src="../js/plot.js"></script>
 
   </head>
 
@@ -104,87 +59,98 @@
 
     <div style="background: linear-gradient(to bottom right, #103f54 0%, #19054a 51%, #320554 75%); height: 100%;">
         <!-- Page Content -->
-	    <div class="container" style="padding-top: 40px;">
+	    <div class="container" style="padding-top: 40px;min-height: 100vh;margin-bottom: 40px;">
 	    	
 	    	<div class="row" style="padding-top: 50px;">
 				<div class="col-md-12 fadein" style="margin-left:1px;margin-right:1px; margin-bottom: 10px; padding-left:1px;padding-right:1px;">
-					<h1 class="subtitle" style="font-size: 3.5rem;color: white;"> Machine Learning</h1>
+					<h1 class="subtitle" style="font-size: 3.5rem;color: white;"> Leukemia Diagnosis</h1>
 				</div>
 			</div>
 			<div class="row" style="padding-top: 5px; margin-bottom: 10px;color: white;">
 				<div class="col-md-10 fadein fadein-long" style="padding-left:0px; ">
-					<span>Machine Learning, and more specifically, Deep Learning, is a field that has exploded in the past decade. The primary goal of machine learning is as follows: Given a dataset, using implicit rules, find a model which accurately describes the data and can make predictions about future data. The applications of the advancements in this field range from Computer Vision to Targeted Advertising to Accurate Medical Diagnoses. Below we define a few key terms used in the machine learning field, as well as provide sample demonstrations of several methods in action.
-
+					<span>In this case study, we take a look at patients from two different leukemia strains: Acute lymphoblastic leukemia (ALL) and Acute myelogenous leukemia (AML). As seen from the charts above, these cancer’s still carry high mortality rates, and thus identifying patients by their correct subcategory of leukemia is critical in providing precision treatment. 
 					</span>
 				</div>
 			</div>
 
 			<div class="row" style="padding-top: 10px;">
 				<div class="col-md-12 fadein fadein-long" style="margin-left:1px;margin-right:1px; margin-bottom: 0px; padding-left:1px;padding-right:1px;">
-					<h2 class="subtitle" style="font-size: 1.5rem;color: white;"> Training Set</h1>
+					<h2 class="subtitle" style="font-size: 1.5rem;color: white;"> Dataset</h1>
 				</div>
 			</div>
 			<div class="row" style="padding-top: 0px; margin-bottom: 20px;color: white;">
 				<div class="col-md-10 fadein fadein-long" style="padding-left:0px; ">
-					<span>The data set used to train the machine learning model.
+					<span>Our dataset consisted of 38 leukemia patients in our training set, 27 of whom had acute lymphoblastic leukemia (ALL), and 11 of whom had acute myelogenous leukemia (AML). The data points included gene expression readouts across 7500 different genes, which are typically collected via blood sample for leukemia patients. 
 					</span>
 				</div>
 			</div>
 
 			<div class="row" style="padding-top: 0px;">
 				<div class="col-md-12 fadein fadein-long" style="margin-left:1px;margin-right:1px; margin-bottom: 0px; padding-left:1px;padding-right:1px;">
-					<h2 class="subtitle" style="font-size: 1.5rem;color: white;"> Validation Set</h1>
+					<h2 class="subtitle" style="font-size: 1.5rem;color: white;"> Decision Boundaries</h1>
 				</div>
 			</div>
 			<div class="row" style="padding-top: 0px; margin-bottom: 20px;color: white;">
 				<div class="col-md-10 fadein fadein-long" style="padding-left:0px; ">
-					<span>The set of points used to test the accuracy of the model inferred from the training set.
+					<span>Using the fact that gene measurements are heavily correlated, we begun by applying Principal Component Analysis (PCA) to our dataset, reducing the dimensionality of our data from 7500 to 3. We used two classification methods: Linear Regression and Quadratic Discriminant Analysis (QDA), giving us linear and parabolic decision boundaries respectively.
 					</span>
 				</div>
 			</div>
 
 			<div class="row" style="padding-top: 0px;">
 				<div class="col-md-12 fadein fadein-long" style="margin-left:1px;margin-right:1px; margin-bottom: 0px; padding-left:1px;padding-right:1px;">
-					<h2 class="subtitle" style="font-size: 1.5rem;color: white;"> Decision Boundary</h1>
+					<h2 class="subtitle" style="font-size: 1.5rem;color: white;"> Results</h1>
 				</div>
 			</div>
 			<div class="row" style="padding-top: 0px; margin-bottom: 20px;color: white;">
 				<div class="col-md-10 fadein fadein-long" style="padding-left:0px; ">
-					<span>The hypersurface that partitions the underlying dataset into the respective sub-labels (ie separating leukemia patients of one type from patients of another type).
+					<span>We validate our models on a test set of 34 patients, 20 of whom have ALL, and 14 of whom have AML. Our simpler model of linear regression gives us an accuracy rate of 85.2% (29 Patients correctly classified). Moving on to Quadratic Discriminant Analysis, we see a higher accuracy rate of 91.1% (31 Patients correctly classified). Therefore, we see that our models are able to perform with high accuracy, even when given limited training data. 
+
 					</span>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="col-md-12 text-center fadein" style="margin-left:1px;margin-right:1px; margin-bottom: 10px; padding-left:1px;padding-right:1px;">
-					<button id="displayParabola" class="button" style="width: 180px;height: 80px;" onclick="exampleParabola()"> Display data</button>
-					<button id="visibleParabola" class="button" style="width: 180px;height: 80px;padding-right: 0px;padding-left:0px;" onclick="parabolaVisibility()"> Show/Hide Test Set</button>
-				</div>
-			</div>
 			<div class="row center-block">
-				<div class="col-md-10 offset-md-1 text-center fadein">
-					<div id="parabola" style="width:100%;height:700px;"></div>
+				<div class="col-md-12" style="padding-right: 1px;padding-left: 0px;">
+					<div class="row center-block" style="padding-top: 25px;">
+						<div class="col-md-3 text-center fadein fadein-long" >
+								<button id="MLplane" class="button"  style="width: 100%;height: 50px;padding-right: 0px;padding-left:0px;" onclick="hideValidation()">Show/Hide Test Set</button>
+								
+						</div>
+						<div class="col-md-3 text-center fadein fadein-long" >
+								<button id="MLplane" class="button"  style="width: 100%;height: 50px;padding-right: 0px;padding-left:0px;" onclick="MLShowPlane()">Plane</button>
+								
+						</div>
+						<div class="col-md-3 text-center fadein fadein-long" >
+								
+								<button id="MLparabola" class="button"  style="width: 100%;height: 50px;padding-right: 0px;padding-left:0px;" onclick="MLShowParabola()">Parabola</button>
+								
+						</div>
+						<div class="col-md-3 text-center fadein fadein-long" >
+								
+								<button id="MLnone" class="button"  style="width: 100%;height: 50px;padding-right: 0px;padding-left:0px;" onclick="MLHideBoundary()">No Boundary</button>
+						</div>
+					</div>
+					<div class="row center-block" >
+						
+						<div class="col-md-12 text-center fadein fadein-extralong">
+							<div id="MLdata" style="width:100%;height:700px;"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 
-			<div class="row">
-				<div class="col-md-12 text-center fadein" style="margin-left:1px;margin-right:1px; padding-left:1px;padding-right:1px;">
-					<button id="MLplane" class="button" style="width: 180px;height: 80px" onclick="MLShowPlane()">Plane</button>
-					<button id="MLparabola" class="button" style="width: 180px;height: 80px;" onclick="MLShowParabola()">Parabola</button>
-					<button id="MLnone" class="button" style="width: 180px;height: 80px;" onclick="MLHideBoundary()">No Boundary</button>
+		<!-- 	<div class="row" style="padding-top: 15px;margin-bottom: 40px;color: white;">
+				<div class="col-md-8 fadein fadein-long" style="padding-left:0px; ">
+					<a id="background" class="nav-button" href="case-study.html">Case Study - Leukemia &nbsp;&nbsp;&nbsp;&nbsp;<img src="../resources/arrow.png" height="30"></a>
 				</div>
-			</div>
-			<div class="row center-block">
-				<div id="MLdata" style="width:800px;height:500px;"></div>
-			</div>
+			</div> -->
 			
 
 			
+			
 
 
-			<div id="plane" style="width:800px;height:500px;"></div>
-			<button id="displayPlane" onclick="examplePlane()"> Display data</button>
-			<button id="visibleParabola" onclick="planeVisibility()"> Show/Hide Test Set</button>
+			
 		</div>
 	    <!-- /.container -->
     </div>
