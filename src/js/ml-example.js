@@ -188,7 +188,15 @@ $( document ).ready(function() {
 		};
 
 
-		Plotly.newPlot('plane', [data_z1, train_points, train_points2, test_points, test_points2]);
+		Plotly.newPlot('plane', [data_z1, train_points, train_points2, test_points, test_points2], 
+			{autosize: true,margin: {
+			t: 20, //top margin
+			l: 20, //left margin
+			r: 20, //right margin
+			b: 20 //bottom margin
+			}
+			}
+		);
 	}
 
 
@@ -368,7 +376,13 @@ $( document ).ready(function() {
 		};
 
 
-		Plotly.newPlot('parabola', [data_z1, train_points, train_points2, test_points, test_points2], 
+		Plotly.newPlot('parabola', [data_z1, train_points, train_points2, test_points, test_points2], {autosize: true,margin: {
+			t: 20, //top margin
+			l: 20, //left margin
+			r: 20, //right margin
+			b: 20 //bottom margin
+			}
+			}
 			// {
 			//   paper_bgcolor: 'rgba(0,0,0,0)',
 			//   plot_bgcolor: 'rgba(0,0,0,0)'
@@ -381,10 +395,12 @@ $( document ).ready(function() {
 
 		bParabolaTest = !bParabolaTest;
 		layout_test = {
-			visible: bParabolaTest
+			visible: bParabolaTest,
+			autosize: true
 		}
 		layout_train = {
-			visible: !bParabolaTest
+			visible: !bParabolaTest,
+			autosize: true
 		}
 
 		Plotly.restyle('parabola', layout_train, 1);
@@ -399,10 +415,12 @@ $( document ).ready(function() {
 
 		bPlaneTest = !bPlaneTest;
 		layout_test = {
-			visible: bPlaneTest
+			visible: bPlaneTest,
+			autosize: true
 		}
 		layout_train = {
-			visible: !bPlaneTest
+			visible: !bPlaneTest,
+			autosize: true
 		}
 
 		Plotly.restyle('plane', layout_train, 1);
@@ -415,10 +433,12 @@ $( document ).ready(function() {
 
 	function MLShowParabola() {
 		layout_parabola = {
-			visible: true
+			visible: true,
+			autosize: true
 		}
 		layout_plane = {
-			visible: false
+			visible: false,
+			autosize: true
 		}
 
 		Plotly.restyle('MLdata', layout_plane, 4);
@@ -427,10 +447,12 @@ $( document ).ready(function() {
 
 	function MLShowPlane() {
 		layout_parabola = {
-			visible: false
+			visible: false,
+			autosize: true
 		}
 		layout_plane = {
-			visible: true
+			visible: true,
+			autosize: true
 		}
 
 		Plotly.restyle('MLdata', layout_plane, 4);
@@ -440,10 +462,12 @@ $( document ).ready(function() {
 
 	function MLHideBoundary() {
 		layout_parabola = {
-			visible: false
+			visible: false,
+			autosize: true
 		}
 		layout_plane = {
-			visible: false
+			visible: false,
+			autosize: true
 		}
 
 		Plotly.restyle('MLdata', layout_plane, 4);
