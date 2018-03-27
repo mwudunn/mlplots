@@ -158,7 +158,7 @@ $( document ).ready(function() {
 	
 		var test_points = {
 			x:tx, y: ty, z: tz,
-			showlegend: false,
+			showlegend: true,
 			name:'Test Set ALL',
 			mode: 'markers',
 			visible: false,
@@ -173,7 +173,7 @@ $( document ).ready(function() {
 		test_points2 = {
 			x:tx2, y: ty2, z: tz2,
 			visible: false,
-			showlegend: false,
+			showlegend: true,
 			showscale: false,
 			name:'Test Set AML',
 			mode: 'markers',
@@ -452,7 +452,8 @@ $( document ).ready(function() {
 		}
 		layout_plane = {
 			visible: true,
-			autosize: true
+			autosize: true,
+			showlegend: true
 		}
 
 		Plotly.restyle('MLdata', layout_plane, 4);
