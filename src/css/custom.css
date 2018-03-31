@@ -12,7 +12,7 @@
 	padding: 10px 20px;
 	color: #ffffff;
 	font-weight: 500;
-	font-family: avenir;
+	font-family: $font-family-base;
 
 }
 
@@ -23,7 +23,7 @@
 	padding: 15px 32px;
 	color: #ffffff;
 	font-weight: 500;
-	font-family: avenir;
+	font-family: $font-family-base;
 }
 
 .nav-button:hover {
